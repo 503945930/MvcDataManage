@@ -1,0 +1,52 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="pragma" content="no-cache">
+    <script src="~/Content/Common/lib/jquery-1.11.1.min.js"></script>
+      <link href="@Url.Content("~/assets/css/bootstrap.min.css")" rel="stylesheet" />
+    <title>登陆</title>
+    <style type="text/css">
+        .pp {
+        width:100px;height:33px;float:left;color:#fff;text-align:center;font-size:24px;margin-right:18px;
+        }
+        .center {           
+            width:1030px;
+            height:912px;
+            background:url('/Content/bg_3.png') no-repeat;
+            margin:0px auto;
+        }
+          
+    </style>
+</head>
+<body >
+    <div style="background: url('/Content/bg_1.png') repeat-x;">
+        <div class="center" >
+        <img src="~/Content/dl.jpg"  style="position: absolute;top: 420px;left:50%;margin-left:-264px;border-radius:7px;"  />
+        @using (Html.BeginForm("DoLogin", "Login", FormMethod.Post))
+        {   
+            <div margin:0 auto;>
+            <div style="position:absolute;top: 465px;right:50%;margin-right:-206px;">
+                <p class="pp"><b>用户名：</b></p>
+                <input type="text" style="width:280px;height: 32px"  name="UserName" required="" value="admin" placeholder = "请输入用户名">
+                
+            </div>
+            <div style="position: absolute;top: 520px;right: 50%;margin-right:-206px;">
+                <p class="pp" style="letter-spacing:4px;"><b>密 码：</b></p>
+                <input type="Password"  style="width: 280px;height: 32px"  name="Password" required="" value="admin" placeholder = "请输入密码">
+            </div>
+             <div style="position: absolute;top: 580px;right:50%;margin-right:-200px;">
+                 <p class="pp" style="text-decoration:underline;margin-right:70px;font-size:20px;"><b>忘记密码</b></p>
+                 <input type="submit"  style="width: 100px;height: 35px;background: url('/Content/button.gif') no-repeat" value="" >
+            </div>
+        </div>
+        }
+         </div>
+    </div>
+</body>
+</html>

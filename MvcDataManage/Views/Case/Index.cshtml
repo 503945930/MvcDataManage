@@ -1,0 +1,33 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+ <script type="text/javascript">
+ function Test() {
+     alert("删除成功");
+ }
+ </script>
+<h2>Index</h2>
+<table class="table table-bordered">
+   <caption>案件</caption>
+   <thead>
+       <tr>         
+           <th>案件编号</th>
+           <th>案件名称</th>
+           <th>案件简介</th>
+           <th>犯罪嫌疑人资料</th>
+            <th>操作</th>
+       </tr>
+   </thead>
+   <tbody>
+      <tr>
+         <td>002</td>
+         <td>66</td>
+          <td>6666</td>
+          <td><a href="/Case/Suspect">查看</a></td>
+          <td> <a href="#">修改</a>
+              <a href="#" onclick="Test();">删除</a>
+          </td>
+      </tr>
+    
+   </tbody>
+</table>  

@@ -1,0 +1,16 @@
+﻿@{
+    ViewBag.Title = "Alert";
+    Layout = null;
+}
+  <script src="~/Content/Common/lib/jquery-1.11.1.min.js"></script>
+<script type="text/javascript">
+    $(function() {
+        alert('@ViewBag.alert ');
+        location = '/@ViewBag.con/@ViewBag.ac';
+       @* if (confirm(' @ViewBag.alert ')) {
+           
+        }*@
+    })
+
+</script>
+

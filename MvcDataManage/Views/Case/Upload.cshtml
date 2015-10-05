@@ -1,0 +1,131 @@
+﻿@model MvcDataManage.Models.AnyModel
+@{
+    ViewBag.Title = "Upload";
+}
+
+<h2>上传图片</h2>
+<style type="text/css">
+    #selectedFiles img
+    {
+        max-width: 200px;
+        max-height: 200px;
+        float: left;
+        margin-bottom: 10px;
+    }
+
+    input[type='file']
+    {
+        color: transparent;
+    }
+</style>
+
+
+<script>
+    var nowTemp = new Date();
+    var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+    var files;
+    var storedFiles = [];
+    var upc = 0;
+
+   
+
+    $(function () {
+
+        $(":file").attr('title', '  ');
+        var $loading = $('#loadingDiv').hide();
+
+        $("input[id^='fileToUpload']").change(function (e) {
+            doReCreate(e);
+        });
+        selDiv = $("#selectedFiles");
+    });
+
+
+    function doReCreate(e) {
+        upc = upc + 1;
+        handleFileSelect(e);
+
+        $("input[id^='fileToUpload']").hide();
+
+        $('<input>').attr({
+            type: 'file',
+            multiple: 'multiple',
+            id: 'fileToUpload' + upc,
+            class: 'fUpload',
+            name: 'fileUpload',
+            style: 'float: left',
+            title: '  ',
+            onchange: "doReCreate(event)"
+
+        }).appendTo('#uploaders');
+    }
+
+
+    function handleFileSelect(e) {
+
+        //selDiv.innerHTML = ""; storedFiles = []; 
+        selDiv = document.querySelector("#selectedFiles");
+
+        if (!e.target.files) return;
+
+        //selDiv.innerHTML = "";
+        files = e.target.files;
+
+        for (var i = 0; i < files.length; i++) {
+            //if (i == 0) { selDiv.innerHTML = ""; storedFiles = []; }
+            var f = files[i];
+            selDiv.innerHTML += "<div>" + f.name + "<a  href='#' onclick='removeAtt(this)'> X </a></div>";
+            storedFiles.push(f.name);
+        }
+        $('#@Html.IdFor(i => i.FilesToBeUploaded)').val(storedFiles);
+    }
+
+    function removeAtt(t) {
+        var serEle = $(t).parent().text().slice(0, -3);
+        var index = storedFiles.indexOf(serEle);
+        if (index !== -1) {
+            storedFiles.splice(index, 1);
+        }
+        $(t).parent().remove();
+
+        $('#@Html.IdFor(i => i.FilesToBeUploaded)').val(storedFiles);
+
+    }
+</script>
+
+
+
+
+
+@using (Html.BeginForm("UploadAction", "Case", FormMethod.Post, new { enctype = "multipart/form-data", id = "frmID" }))
+{
+    @Html.HiddenFor(i => i.FilesToBeUploaded)
+
+    <div class="labelstyle">
+        <label>Files</label>
+    </div>
+     <div class="form-group hidden ">
+        <label  class="col-sm-2 control-label"></label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control"  name="ResId" value="@ViewBag.ResId"
+                >
+        </div>
+    </div>
+    <div id="uploaders">
+        <input type="file" id="fileToUpload" name="fileUpload" multiple="multiple" accept=".gif,.png,.jpg" style="width:75px;float: left;" />
+        <br />
+        <span id="spnFile" style="float: left; color: #FF0000"></span>
+        @Html.ValidationMessage("File")
+        @Html.Hidden("hdnFileUpload")
+    </div>
+    <br />
+ <div class="col-lg-6">
+        <button class="btn btn-warning" id="btnAddIssue" type="submit">上传</button>
+    </div>
+    <br/>
+    <br/>
+    <div class="control-section" style="padding: 0px;">
+        
+        <div id="selectedFiles"></div>
+    </div>
+}

@@ -1,0 +1,147 @@
+﻿@using MvcDataManage.Models
+@{
+    ViewBag.Title = "Log";
+}
+@*<script src="~/Content/bootstrap-paginator-master/lib/bootstrap.min.js"></script>*@
+    <script src="~/Content/bootstrap-paginator-master/build/bootstrap-paginator.min.js"></script>
+    <link href="~/Content/bootstrap-paginator-master/css/bootstrap.css" rel="stylesheet" />
+<style type="text/css">
+        #line-chart {
+            height: 300px;
+            width: 800px;
+            margin: 0px auto;
+            margin-top: 1em;
+        }
+
+        .navbar-default .navbar-brand, .navbar-default .navbar-brand:hover {
+            color: #00ced1;
+        }
+    </style>
+
+    <script>
+        $(function () {
+
+            //分页
+            var options = {
+                currentPage: 1,//当前页
+                totalPages: $("#totalpage").val(),//总页数
+                numberofPages: 5,//显示的页数
+
+                itemTexts: function (type, page, current) { //修改显示文字
+                    switch (type) {
+                        case "first":
+                            return "第一页";
+                        case "prev":
+                            return "上一页";
+                        case "next":
+                            return "下一页";
+                        case "last":
+                            return "最后一页";
+                        case "page":
+                            return page;
+                    }
+                }, onPageClicked: function (event, originalEvent, type, page) { //异步换页
+                    //$.post("/Login/QueryPage", { id: page, }, function (data) {
+                    //    // $("#logtable").html(data);
+                    //    tableappend(result); //成功则执行表格刷新函数
+                    //});
+                    //alert(page);
+                    //location.href = "/Users/log/" + page;
+                    $.ajax({
+                        url: "/Users/QueryPage/" + page,
+                        dataType: "json",
+                        success: function (data) {                       
+                            tableappend(data); //成功则执行表格刷新函数
+
+
+    }
+                    });
+
+                },
+
+            };
+            $("#example").bootstrapPaginator(options);
+        });
+
+
+        //动态刷新表格
+        function tableappend(result) {
+
+            $('#retable tbody').empty();
+
+            var studentlist = eval(result);
+            for (var i = 0; i < studentlist.length; i++) {
+                //创建tr对象
+                var addtbody = document.createElement("tbody");
+                var addtr = document.createElement("tr");
+                //行中创建三个td对象，并把studentlist中的值赋给它
+                var addtd1 = document.createElement("td");
+                addtd1.innerHTML = studentlist[i].UserName;
+                var addtd6 = document.createElement("td");
+                //alert(studentlist[i].BoolTansfe);
+
+                addtd6.innerHTML = studentlist[i].IP;
+                var addtd2 = document.createElement("td");
+                addtd2.innerHTML = studentlist[i].Department;
+                var addtd3 = document.createElement("td");
+                addtd3.innerHTML = studentlist[i].RoleName;
+                var addtd4 = document.createElement("td");
+                addtd4.innerHTML = studentlist[i].OperateName;
+                var addtd5 = document.createElement("td");
+                //alert(studentlist[i].BoolTansfe);
+               
+                addtd5.innerHTML = studentlist[i].Dtime;
+               
+                //把创建的td对象加入tr中去
+                addtr.appendChild(addtd1);
+                addtr.appendChild(addtd6);
+                addtr.appendChild(addtd2);
+                addtr.appendChild(addtd3);
+                addtr.appendChild(addtd4);
+                addtr.appendChild(addtd5);
+                
+                addtbody.appendChild(addtr);
+                //把tr加入table中去
+                //document.getElementById("retable").appendChild(addtr);
+                document.getElementById("retable").appendChild(addtbody);
+            }
+        }
+        
+    </script>
+<h2>>>操作日志</h2>
+ <div class="panel panel-primary" style="margin: 0 10%">
+
+        <div class="panel-body">
+            <table id="retable" class="table table-bordered table-hover table-striped">
+                <caption></caption>
+                <thead>
+                    <tr>
+                        <th>用户名</th>
+                        <th>IP</th>
+                        <th>部门</th>
+                        <th>用户类型</th>
+                        <th>操作</th>
+                        <th>操作时间</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (UserOperateModel a in @ViewBag.UserOperateModel)
+                    {
+                        <tr>
+                            <td>@a.UserName.Trim()</td>
+                            <td>@a.IP.Trim()</td>
+                            <td>@a.Department.Trim()</td>
+                            <td>@a.RoleName.Trim()</td>
+                            <td>@a.OperateName.Trim()</td>
+                            <td>
+                               @a.Dtime.Trim()
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <div id="example"></div>
+            <input  id="totalpage" type="hidden" value="@ViewBag.TotalPage" />
+        </div>
+    </div>

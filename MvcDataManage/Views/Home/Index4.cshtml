@@ -1,0 +1,339 @@
+﻿@using DefaultConnection
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script type="text/javascript">
+    $(function () {
+        $.ajax({
+            url: "/Home/IsNotNull",
+            dataType: "json",
+            async: false,
+            success: function (data) {
+                //alert("1234");
+                if (data.length != 0) {
+
+                    $.each(data, function (index, content) {
+                        //alert(content['ResNmae']);
+
+                        $("#" + content["CabinetIId"]).css("background", "#7fffd4");
+                        // alert(content["CabinetIId"]);
+                    });
+
+                }
+                // html.appendTo('#evidence');
+
+
+            }
+        });
+
+
+
+        //给柜子绑定点击事件
+        //alert("123");
+        $('.center dl dd a').click(function () {
+            // var num = event.srcElement.innerText;
+            var num = $(this).context.text;
+            //console.log(num);
+            $.ajax({
+                url: "/Home/OpenCab?cabinet=" + num,
+                dataType: "json",
+                async: false,
+                success: function (data) {
+                    //alert("1234");
+                    if (data.length != 0) {
+                        $('#evidence').empty();
+                        var html = '';
+                        $.each(data, function (index, content) {
+                            //alert(content['ResNmae']);
+                            html += " <a href='/Home/Data/" + content['ResID'] + "'>" + content['ResNmae'] + "</a>";
+                           
+                            //html += " <a href='/Data/Add?Resid=" + num + "'>" + "录入数据" + "</a>";
+                            //$('#evidence').html(html);
+                            //alert(content["ResNmae"]);                      
+                        });
+                        html += " <a href='/Data/Add?Resid=" + num + "' style='margin-left:350px'>" + "录入数据" + "</a>";
+                        $('#evidence').html(html);
+                    } else {
+                        var html = '';
+                        html += " <a href='/Data/Add?Resid=" + num + "'>" + "录入数据" + "</a>";
+                        $('#evidence').html(html);
+                    }
+                    // html.appendTo('#evidence');
+
+
+                }
+            });
+        });
+
+
+    })
+</script>
+<style type="text/css">
+    *
+    {
+        margin: 0;
+        padding: 0;
+    }
+    /*.center{  margin:20px auto; overflow:hidden;width: 964px;border-right: 0;}*/
+    .center
+    {
+        margin: 20px auto;
+        overflow: hidden;
+        border-right: 0;
+    }
+        /*.center dl{ width:120px; height:150px; text-align:center; float:left; border:1px solid #c0c0c0;margin-bottom: 0}*/
+        .center dl
+        {
+            width: 12%;
+            height: 150px;
+            text-align: center;
+            float: left;
+            border: 1px solid #c0c0c0;
+            margin-bottom: 0;
+        }
+
+            .center dl dt
+            {
+                font-size: 15px;
+                color: #000000;
+                font-family: "宋体","Arial Narrow";
+                padding-top: 10px;
+            }
+
+            .center dl dd
+            {
+                height: 25%;
+                text-align: center;
+            }
+    #evidence a {
+    margin-right:15px;
+    }
+
+    #myModal .modal-body
+    {
+        max-height: 800px;
+    }
+
+    #myModal
+    {
+        margin: 150px 0 0 0;
+    }
+    /* PLAY THE WITH THE VALUES TO SEE GET THE DESIRED EFFECT */
+</style>
+<h2>>>资料柜</h2>
+<div class="stats">
+    <p class="stat"><span class="label label-info">@ViewBag.ReCont</span> 物证</p>
+    <p class="stat"><span class="label label-success">@ViewBag.ReWeiCont</span> 未移交</p>
+    <p class="stat"><span class="label label-danger">@ViewBag.ReYiCont</span> 已移交</p>
+</div>
+<div class="input-append">
+    @*<input type="text" class="span2 search-query">*@
+    <button type="submit" class="btn btn-default" onclick="location='/Home/DataSearch'">搜索</button>
+</div>
+
+
+<div class="center">
+    <dl class="center_dl_01">
+        <dt>物证柜 8</dt>
+        <dd id="22"><a href="#" data-toggle="modal" data-target="#myModal">8-1</a></dd>
+        <dd id="23"><a href="#" data-toggle="modal" data-target="#myModal">8-2</a></dd>
+        <dd id="24"><a href="#" data-toggle="modal" data-target="#myModal">8-3</a></dd>
+    </dl>
+    <dl class="center_dl_02">
+        <dt>物证柜 7</dt>
+        <dd id="19"><a href="#" data-toggle="modal" data-target="#myModal">7-1</a></dd>
+        <dd id="20"><a href="#" data-toggle="modal" data-target="#myModal">7-2</a></dd>
+        <dd id="21"><a href="#" data-toggle="modal" data-target="#myModal">7-3</a></dd>
+    </dl>
+    <dl class="center_dl_03">
+        <dt>物证柜 6</dt>
+        <dd id="16"><a href="#" data-toggle="modal" data-target="#myModal">6-1</a></dd>
+        <dd id="17"><a href="#" data-toggle="modal" data-target="#myModal">6-2</a></dd>
+        <dd id="18"><a href="#" data-toggle="modal" data-target="#myModal">6-3</a></dd>
+    </dl>
+    <dl class="center_dl_04">
+        <dt>物证柜 5</dt>
+        <dd id="13"><a href="#" data-toggle="modal" data-target="#myModal">5-1</a></dd>
+        <dd id="14"><a href="#" data-toggle="modal" data-target="#myModal">5-2</a></dd>
+        <dd id="15"><a href="#" data-toggle="modal" data-target="#myModal">5-3</a></dd>
+    </dl>
+    <dl class="center_dl_04">
+        <dt>物证柜 4</dt>
+        <dd id="10"><a href="#" data-toggle="modal" data-target="#myModal">4-1</a></dd>
+        <dd id="11"><a href="#" data-toggle="modal" data-target="#myModal">4-2</a></dd>
+        <dd id="12"><a href="#" data-toggle="modal" data-target="#myModal">4-3</a></dd>
+    </dl>
+    <dl class="center_dl_04">
+        <dt>物证柜 3</dt>
+        <dd id="7"><a href="#" data-toggle="modal" data-target="#myModal">3-1</a></dd>
+        <dd id="8"><a href="#" data-toggle="modal" data-target="#myModal">3-2</a></dd>
+        <dd id="9"><a href="#" data-toggle="modal" data-target="#myModal">3-3</a></dd>
+    </dl>
+    <dl class="center_dl_04">
+        <dt>物证柜 2</dt>
+        <dd id="4"><a href="#" data-toggle="modal" data-target="#myModal">2-1</a></dd>
+        <dd id="5"><a href="#" data-toggle="modal" data-target="#myModal">2-2</a></dd>
+        <dd id="6"><a href="#" data-toggle="modal" data-target="#myModal">2-3</a></dd>
+    </dl>
+    <dl class="center_dl_04">
+        <dt>物证柜 1</dt>
+        <dd id="1"><a href="#" data-toggle="modal" data-target="#myModal">1-1</a></dd>
+        <dd id="2"><a href="#" data-toggle="modal" data-target="#myModal">1-2</a></dd>
+        <dd id="3"><a href="#" data-toggle="modal" data-target="#myModal">1-3</a></dd>
+    </dl>
+
+</div>
+<div class="center">
+    <dl class="center_dl_01">
+        <dt>物证柜 16</dt>
+        <dd id="46"><a href="#" data-toggle="modal" data-target="#myModal">16-1</a></dd>
+        <dd id="47"><a href="#" data-toggle="modal" data-target="#myModal">16-2</a></dd>
+        <dd id="48"><a href="#" data-toggle="modal" data-target="#myModal">16-3</a></dd>
+    </dl>
+    <dl class="center_dl_02">
+        <dt>物证柜 15</dt>
+        <dd id="43"><a href="#" data-toggle="modal" data-target="#myModal">15-1</a></dd>
+        <dd id="44"><a href="#" data-toggle="modal" data-target="#myModal">15-2</a></dd>
+        <dd id="45"><a href="#" data-toggle="modal" data-target="#myModal">15-3</a></dd>
+    </dl>
+    <dl class="center_dl_03">
+        <dt>物证柜 14</dt>
+        <dd id="40"><a href="#" data-toggle="modal" data-target="#myModal">14-1</a></dd>
+        <dd id="41"><a href="#" data-toggle="modal" data-target="#myModal">14-2</a></dd>
+        <dd id="42"><a href="#" data-toggle="modal" data-target="#myModal">14-3</a></dd>
+    </dl>
+    <dl class="center_dl_04">
+        <dt>物证柜 13</dt>
+        <dd id="37"><a href="#" data-toggle="modal" data-target="#myModal">13-1</a></dd>
+        <dd id="38"><a href="#" data-toggle="modal" data-target="#myModal">13-2</a></dd>
+        <dd id="39"><a href="#" data-toggle="modal" data-target="#myModal">13-3</a></dd>
+    </dl>
+    <dl class="center_dl_04">
+        <dt>物证柜 12</dt>
+        <dd id="34"><a href="#" data-toggle="modal" data-target="#myModal">12-1</a></dd>
+        <dd id="35"><a href="#" data-toggle="modal" data-target="#myModal">12-2</a></dd>
+        <dd id="36"><a href="#" data-toggle="modal" data-target="#myModal">12-3</a></dd>
+    </dl>
+    <dl class="center_dl_04">
+        <dt>物证柜 11</dt>
+        <dd id="31"><a href="#" data-toggle="modal" data-target="#myModal">11-1</a></dd>
+        <dd id="32"><a href="#" data-toggle="modal" data-target="#myModal">11-2</a></dd>
+        <dd id="33"><a href="#" data-toggle="modal" data-target="#myModal">11-3</a></dd>
+    </dl>
+    <dl class="center_dl_04">
+        <dt>物证柜 10</dt>
+        <dd id="28"><a href="#" data-toggle="modal" data-target="#myModal">10-1</a></dd>
+        <dd id="29"><a href="#" data-toggle="modal" data-target="#myModal">10-2</a></dd>
+        <dd id="30"><a href="#" data-toggle="modal" data-target="#myModal">10-3</a></dd>
+    </dl>
+    <dl class="center_dl_04">
+        <dt>物证柜 9</dt>
+        <dd id="25"><a href="#" data-toggle="modal" data-target="#myModal">9-1</a></dd>
+        <dd id="26"><a href="#" data-toggle="modal" data-target="#myModal">9-2</a></dd>
+        <dd id="27"><a href="#" data-toggle="modal" data-target="#myModal">9-3</a></dd>
+    </dl>
+
+</div>
+<div class="center">
+    <dl class="center_dl_01">
+        <dt>物证柜 21</dt>
+        <dd id="61"><a href="#" data-toggle="modal" data-target="#myModal">21-1</a></dd>
+        <dd id="62"><a href="#" data-toggle="modal" data-target="#myModal">21-2</a></dd>
+        @* <dd id="63"><a href="#" data-toggle="modal" data-target="#myModal">21-3</a></dd>*@
+    </dl>
+    <dl class="center_dl_02">
+        <dt>物证柜 20</dt>
+        <dd id="58"><a href="#" data-toggle="modal" data-target="#myModal">20-1</a></dd>
+        <dd id="59"><a href="#" data-toggle="modal" data-target="#myModal">20-2</a></dd>
+        @*<dd id="60"><a href="#" data-toggle="modal" data-target="#myModal">20-3</a></dd>*@
+    </dl>
+    <dl class="center_dl_03">
+        <dt>物证柜 19</dt>
+        <dd id="55"><a href="#" data-toggle="modal" data-target="#myModal">19-1</a></dd>
+        <dd id="56"><a href="#" data-toggle="modal" data-target="#myModal">19-2</a></dd>
+        @* <dd id="57"><a href="#" data-toggle="modal" data-target="#myModal">19-3</a></dd>*@
+    </dl>
+    <dl class="center_dl_04">
+        <dt>物证柜 18</dt>
+        <dd id="52"><a href="#" data-toggle="modal" data-target="#myModal">18-1</a></dd>
+        <dd id="53"><a href="#" data-toggle="modal" data-target="#myModal">18-2</a></dd>
+        @* <dd id="54"><a href="#" data-toggle="modal" data-target="#myModal">18-3</a></dd>*@
+    </dl>
+    <dl class="center_dl_04">
+        <dt>物证柜 17</dt>
+        <dd id="49"><a href="#" data-toggle="modal" data-target="#myModal">17-1</a></dd>
+        <dd id="50"><a href="#" data-toggle="modal" data-target="#myModal">17-2</a></dd>
+        @* <dd id="51"><a href="#" data-toggle="modal" data-target="#myModal">17-3</a></dd>*@
+    </dl>
+
+
+</div>
+<div class="center">
+    <dl class="center_dl_01">
+        <dt>物证柜 26</dt>
+        <dd id="76"><a href="#" data-toggle="modal" data-target="#myModal">26-1</a></dd>
+        <dd id="77"><a href="#" data-toggle="modal" data-target="#myModal">26-2</a></dd>
+       @* <dd id="78"><a href="#" data-toggle="modal" data-target="#myModal">26-3</a></dd>*@
+    </dl>
+    <dl class="center_dl_02">
+        <dt>物证柜 25</dt>
+        <dd id="73"><a href="#" data-toggle="modal" data-target="#myModal">25-1</a></dd>
+        <dd id="74"><a href="#" data-toggle="modal" data-target="#myModal">25-2</a></dd>
+       @* <dd id="75"><a href="#" data-toggle="modal" data-target="#myModal">25-3</a></dd>*@
+    </dl>
+    <dl class="center_dl_04">
+        <dt>物证柜 24</dt>
+        <dd id="70"><a href="#" data-toggle="modal" data-target="#myModal">24-1</a></dd>
+        <dd id="71"><a href="#" data-toggle="modal" data-target="#myModal">24-2</a></dd>
+      @*  <dd id="72"><a href="#" data-toggle="modal" data-target="#myModal">24-3</a></dd>*@
+    </dl>
+    <dl class="center_dl_04">
+        <dt>物证柜 23</dt>
+        <dd id="67"><a href="#" data-toggle="modal" data-target="#myModal">23-1</a></dd>
+        <dd id="68"><a href="#" data-toggle="modal" data-target="#myModal">23-2</a></dd>
+        @*   <dd id="69"><a href="#" data-toggle="modal" data-target="#myModal">23-3</a></dd>*@
+    </dl>
+    <dl class="center_dl_04">
+        <dt>物证柜 22</dt>
+        <dd id="64"><a href="#" data-toggle="modal" data-target="#myModal">22-1</a></dd>
+        <dd id="65"><a href="#" data-toggle="modal" data-target="#myModal">22-2</a></dd>
+        @*   <dd id="66"><a href="#" data-toggle="modal" data-target="#myModal">22-3</a></dd>*@
+    </dl>
+
+
+
+</div>
+
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+    aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close"
+                    data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">物品列表
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div id="evidence"></div>
+                @* <a id="evidence" href="Data" >AK-47</a>*@
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"
+                    data-dismiss="modal">
+                    关闭
+                </button>
+                @*  <button type="button" class="btn btn-primary">
+               提交更改
+            </button>*@
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal -->
+</div>

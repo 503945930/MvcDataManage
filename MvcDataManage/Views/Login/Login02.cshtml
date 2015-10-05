@@ -1,0 +1,33 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="pragma" content="no-cache">
+    <script src="~/Content/Common/lib/jquery-1.11.1.min.js"></script>
+      <link href="@Url.Content("~/assets/css/bootstrap.min.css")" rel="stylesheet" />
+    <title>登陆</title>
+</head>
+<body >
+    <div style="width: 1220px;height: 760px;background: url('/Content/login8.gif') no-repeat;margin: 0 auto;position: relative">
+        <img src="~/Content/login3.gif"  style="position: absolute;top: 256px"  />
+        @using (Html.BeginForm("DoLogin", "Login", FormMethod.Post))
+        {
+            <div style="position: absolute;top: 335px;right: 235px;">
+                <input type="text" style="width: 205px;height: 32px"  name="UserName" required="" value="admin" placeholder = "请输入用户名">
+                
+            </div>
+            <div style="position: absolute;top: 380px;right: 235px;">
+                <input type="Password"  style="width: 205px;height: 32px"  name="Password" required="" value="admin" placeholder = "请输入密码">
+            </div>
+             <div style="position: absolute;top: 425px;right: 236px;">
+                 <input type="submit"  style="width: 100px;height: 35px;background: url('/Content/button.gif') no-repeat" value="" >
+            </div>
+        }
+    </div>
+</body>
+</html>

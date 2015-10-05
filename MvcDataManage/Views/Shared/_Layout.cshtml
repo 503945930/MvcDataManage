@@ -1,0 +1,174 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>管理后台</title>
+    <meta http-equiv="pragma" content="no-cache">
+
+    <script src="~/Content/Common/lib/jquery-1.11.1.min.js"></script>
+  <script src="~/Content/Common/lib/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/Content/Common/lib/jQuery-Knob/js/jquery.knob.js"></script>
+    <link href="~/Content/Common/lib/bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/Common/lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link href="~/Content/Common/stylesheets/theme.css" rel="stylesheet" />
+    <link href="~/Content/Common/stylesheets/premium.css" rel="stylesheet" />
+
+
+    <link href="~/Content/Font-Awesome-3.2.1/css/font-awesome.min.css" rel="stylesheet" />
+
+
+    <script type="text/javascript">
+
+        $(function () {
+            $(".knob").knob();
+        });
+    </script>
+</head>
+<body class=" theme-blue" style="background:#effbff" >
+
+    <!-- Demo page code -->
+
+    <script type="text/javascript">
+        $(function () {
+            var match = document.cookie.match(new RegExp('color=([^;]+)'));
+            if (match) var color = match[1];
+            if (color) {
+                $('body').removeClass(function (index, css) {
+                    return (css.match(/\btheme-\S+/g) || []).join(' ')
+                })
+                $('body').addClass('theme-' + color);
+            }
+
+            $('[data-popover="true"]').popover({ html: true });
+
+        });
+    </script>
+    <style type="text/css">
+        body {
+            font-family: "Microsoft YaHei",Arial,Helvetica,sans-serif,"宋体";
+        }
+
+        #line-chart {
+            height: 300px;
+            width: 800px;
+            margin: 0px auto;
+            margin-top: 1em;
+        }
+
+        .navbar-default .navbar-brand, .navbar-default .navbar-brand:hover {
+            color: #fff;
+        }
+    </style>
+
+    <script type="text/javascript">
+        $(function () {
+            var uls = $('.sidebar-nav > ul > *').clone();
+            uls.addClass('visible-xs');
+            $('#main-menu').append(uls.clone());
+        });
+    </script>
+
+    <script type="text/javascript">
+        $("[rel=tooltip]").tooltip();
+        $(function () {
+            $('.demo-cancel-click').click(function () { return false; });
+        });
+    </script>
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!-- Le fav and touch icons -->
+    @* <link rel="shortcut icon" href="../assets/ico/favicon.ico">
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">*@
+
+
+    <!--[if lt IE 7 ]> <body class="ie ie6"> <![endif]-->
+    <!--[if IE 7 ]> <body class="ie ie7 "> <![endif]-->
+    <!--[if IE 8 ]> <body class="ie ie8 "> <![endif]-->
+    <!--[if IE 9 ]> <body class="ie ie9 "> <![endif]-->
+    <!--[if (gt IE 9)|!(IE)]><!-->
+    <!--<![endif]-->
+
+    <div>
+
+        <img src="~/Content/logo88.png" height="90%" width="100%" />
+
+           
+       
+    </div>
+    <div style="clear:both"></div>
+    <div class="row" style="background:RGB(226,226,226)">
+        <div class=".col-md-8" style="float:left;width:77%">
+            
+            
+           
+            <span style="margin-left: 20px; font-size: 15px; line-height: 15px;margin-right: 15px;"><i class="icon-time"></i> @DateTime.Now.ToString()</span>
+        </div>
+        <div class=".col-md-4" style="float:left;font-weight:bold;color:#021f85">
+            <span><i class="icon-user"> </i>&nbsp; 管理员 你好，感谢登陆使用</span>
+            <span style="margin-left:10px"> <a href="/Users/ModifyPass/" style="color: #021f85">修改密码</a></span>
+            <span style="margin-left:10px"><a href="/Login/LogOff" style="color: #021f85">安全退出</a></span>
+            <span style="margin-left:10px"><a href="/" target="_blank" style="color: #021f85">首页</a></span>
+        </div>
+    </div>
+
+          
+        
+
+
+    <div style="clear:both"></div>
+
+
+    <div class="sidebar-nav">
+        <ul>
+            <li style="border:1px solid #dff6fe" >
+                <a href="#" data-target=".dashboard-menu" class="nav-header" data-toggle="collapse" 
+                   style="text-decoration:none;background: -webkit-gradient(linear, left bottom, left top, color-stop(0, #effbff), color-stop(1, #dff6fe));color:#22C1B7">
+                    <i class=" icon-folder-open-alt"></i>&nbsp;&nbsp;资料管理<i class="fa fa-collapse"></i>
+                </a>
+            </li>
+            <li>
+                <ul class="dashboard-menu nav nav-list collapse in" style="padding-left:30px;background:#effbff">
+                    <li><a href="/Home/Index"><span class="fa fa-caret-right"></span>资料首页</a></li>
+                    <li><a href="~/Home/DataSearch"><span class="fa fa-caret-right"></span>资料搜索</a></li>
+
+                </ul>
+            </li>
+
+            <li data-popover="true" rel="popover" data-placement="right" style="border:1px solid #dff6fe">
+                <a href="#" data-target=".premium-menu" class="nav-header collapsed" data-toggle="collapse"
+                    style="text-decoration:none;background: -webkit-gradient(linear, left bottom, left top, color-stop(0, #effbff), color-stop(1, #dff6fe));color:#22C1B7">
+                    <i class="icon-user"></i>&nbsp;&nbsp;用户管理<i class="fa fa-collapse"></i>
+                </a>
+            </li>
+            <li>
+                <ul class="premium-menu nav nav-list collapse" style="padding-left:30px;background:#effbff">
+                    @if ((int)@Session["RoseId"] == 1)
+                    {
+                        <li><a href="/Users/Index"><span class="fa fa-caret-right"></span>用户管理</a></li>
+                        <li><a href="/Users/Log"><span class="fa fa-caret-right"></span>操作日志</a></li>
+                        <li><a href="/Users/Register"><span class="fa fa-caret-right"></span>用户注册</a></li>
+                    }
+
+                    <li><a href="/Users/ModifyPass/@ViewBag.Userid"><span class="fa fa-caret-right"></span>修改密码</a></li>
+
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <div class="content" style="height:1450px">
+        @RenderBody()
+
+    </div>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,35 @@
+﻿@{
+    ViewBag.Title = "Suspect";
+}
+ <script type="text/javascript">
+ function Test() {
+     alert("删除成功");
+ }
+ </script>
+<h2>Suspect</h2>
+<table class="table table-bordered">
+   <caption>嫌疑人资料</caption>
+   <thead>
+       <tr>         
+           <th>编号</th>
+           <th>姓名</th>
+           <th>姓别</th>
+           <th>年龄</th>
+           <th>地址</th>
+           <th>操作</th>
+       </tr>
+   </thead>
+   <tbody>
+      <tr>
+         <td>002</td>
+         <td>张三</td>
+          <td>男</td>    
+           <td>15</td>
+          <td>北京</td>       
+          <td> <a href="#">修改</a>
+              <a href="#" onclick="Test();">删除</a>
+          </td>
+      </tr>
+    
+   </tbody>
+</table>  

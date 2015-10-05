@@ -1,0 +1,271 @@
+﻿@model MvcDataManage.Models.AnyModel
+@{
+    ViewBag.Title = "Add";
+}
+
+<h2>录入数据</h2>
+<script type="text/javascript">
+    $(function() {
+        $("#CaseReasonIdfirst").change(function() {
+            $.ajax({
+                url: "/Data/Selete/" + $("#CaseReasonIdfirst option:selected").val().substring(0, 5),
+                type: "get",
+                async:false,
+                success: function (data) {
+
+                    document.getElementById("CaseReasonId").options.length = 0;
+                //        $("#CaseReasonId option").length = 0;
+                    $.each(data, function (index, value) {
+                        
+                        var varItem = new Option(value.CaseReasonName, value.CaseReasonId);
+                        //console.log(varItem);
+                        document.getElementById("CaseReasonId").options.add(varItem);
+
+                                           //objSelect.options[objSelect.options.length] = varItem;  
+                        //    //    //    $("#CaseReasonId").options.add
+                        //    //    //});
+                        //    //    //console.log($("#CaseReasonId option").length);
+                        //    //    //for (var i = $("#CaseReasonId option").length - 1; i >= 0; i--) {
+                        //    //    //    $(this).remove(i);
+                        //    //    //}
+                        //    //    console.log($("#CaseReasonId").length);
+
+                    });
+                }
+            });
+        });
+})
+</script>
+<form class="form-horizontal" role="form" action="/Data/DataAdd" method="POST" enctype = "multipart/form-data"  id = "frmID" >
+    <h2>添加案件信息</h2>
+    <div class="form-group hidden ">
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">案件名称</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name="CaseName"  required
+                placeholder="请输入案件名称">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">案由</label>
+        <div class="col-sm-10">
+            @Html.DropDownList("CaseReasonIdfirst",ViewBag.CaseReason as IEnumerable<SelectListItem>,new {@class="form-control-5",  })
+            @Html.DropDownList("CaseReasonId",ViewBag.CaseReasonn as IEnumerable<SelectListItem>,new {@class="form-control-5"  })
+            @* <input type="text" class="form-control" name="CaseReason" required
+                placeholder="请输入案由">*@
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">物证编号</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name="CaseNum" value="@DateTime.Now.ToString("yyyMMdd")@DateTime.Now.Second@DateTime.Now.Minute" required 
+                placeholder="请输入物证编号">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">物证柜编号</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control"  name="Num"  value="@ViewBag.Resid" readonly="" 
+                   placeholder="请输入物证编号">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">案件简介</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name="CaseSum" required
+                placeholder="请输入案件简介">
+        </div>
+    </div>
+
+
+
+
+    <h2>添加嫌疑人资料</h2>
+    <div class="form-group">
+        <div class="form-group hidden ">
+        </div>
+        <label class="col-sm-2 control-label">姓名</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name="SuspectName" required
+                placeholder="请输入姓名">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">性别</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name="SuspectSex" required
+                placeholder="请输入姓别">
+        </div>
+    </div>
+@*    <div class="form-group">
+        <label class="col-sm-2 control-label">年龄</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name="SuspectAge" required
+                placeholder="请输入年龄">
+        </div>
+    </div>*@
+    <div class="form-group">
+        <label class="col-sm-2 control-label">地址</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name="SuspectAdress" required
+                placeholder="请输入籍贯">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">身份证号码</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name="SuspectIdCard" required
+                placeholder="请输入身份证号码">
+        </div>
+    </div>
+
+
+    <h2>添加物证信息</h2>
+    <div class="form-group hidden ">
+    </div>
+    <div class="form-group  ">
+        <label class="col-sm-2 control-label">物证名称</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name="ResNmae" required 
+                placeholder="物证名称">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">简要物证信息</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name="ResMess" required
+                placeholder="请输入简要物证信息">
+        </div>
+    </div>
+    <label class="col-sm-2 control-label">照片</label>
+    <div class="col-sm-10">
+       
+        <div class="col-sm-10">
+
+            @Html.HiddenFor(i => i.FilesToBeUploaded)
+
+            
+            <div class="form-group hidden ">
+                <label class="col-sm-2 control-label">案件ID</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control"  name="ResId" value="@ViewBag.ResId"
+                >
+                </div>
+            </div>
+            <div id="uploaders">
+                <input type="file" id="fileToUpload" name="fileUpload" multiple="multiple" style="float: left;" />
+                <br />
+                <span id="spnFile" style="float: left; color: #FF0000"></span>
+                @Html.ValidationMessage("File")
+                @Html.Hidden("hdnFileUpload")
+            </div>
+            <br />
+            
+            <br />
+            <br />
+            <div class="control-section" style="padding: 0px;">
+                <div id="selectedFiles"></div>
+            </div>
+
+
+        </div>
+
+
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-success">提交</button>
+            <button type="button" class="btn btn-success" onclick="location='/Home/Index'">返回</button>
+        </div>
+    </div>
+</form>
+
+
+<style type="text/css">
+    #selectedFiles img {
+        max-width: 200px;
+        max-height: 200px;
+        float: left;
+        margin-bottom: 10px;
+    }
+
+    input[type='file'] {
+        color: transparent;
+    }
+</style>
+
+
+<script>
+    var nowTemp = new Date();
+    var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+    var files;
+    var storedFiles = [];
+    var upc = 0;
+
+
+
+    $(function () {
+
+        $(":file").attr('title', '  ');
+        var $loading = $('#loadingDiv').hide();
+
+        $("input[id^='fileToUpload']").change(function (e) {
+            doReCreate(e);
+        });
+
+        selDiv = $("#selectedFiles");
+    });
+
+
+    function doReCreate(e) {
+        upc = upc + 1;
+        handleFileSelect(e);
+
+        $("input[id^='fileToUpload']").hide();
+
+        $('<input>').attr({
+            type: 'file',
+            multiple: 'multiple',
+            id: 'fileToUpload' + upc,
+            class: 'fUpload',
+            name: 'fileUpload',
+            style: 'float: left',
+            title: '  ',
+            onchange: "doReCreate(event)"
+
+        }).appendTo('#uploaders');
+    }
+
+
+    function handleFileSelect(e) {
+
+        //selDiv.innerHTML = ""; storedFiles = []; 
+        selDiv = document.querySelector("#selectedFiles");
+
+        if (!e.target.files) return;
+
+        //selDiv.innerHTML = "";
+        files = e.target.files;
+
+        for (var i = 0; i < files.length; i++) {
+            //if (i == 0) { selDiv.innerHTML = ""; storedFiles = []; }
+            var f = files[i];
+            selDiv.innerHTML += "<div>" + f.name + "<a  href='#' onclick='removeAtt(this)'> X </a></div>";
+            storedFiles.push(f.name);
+        }
+        $('#@Html.IdFor(i => i.FilesToBeUploaded)').val(storedFiles);
+    }
+
+    function removeAtt(t) {
+        var serEle = $(t).parent().text().slice(0, -3);
+        var index = storedFiles.indexOf(serEle);
+        if (index !== -1) {
+            storedFiles.splice(index, 1);
+        }
+        $(t).parent().remove();
+
+        $('#@Html.IdFor(i => i.FilesToBeUploaded)').val(storedFiles);
+
+    }
+</script>

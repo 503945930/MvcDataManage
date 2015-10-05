@@ -1,0 +1,164 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>SkyPost</title>
+
+    <!-- basic styles -->
+
+    <link href="@Url.Content("~/assets/css/bootstrap.min.css")" rel="stylesheet" />
+    <link rel="stylesheet" href="@Url.Content("~/assets/css/font-awesome.min.css") " />
+
+    <!--[if IE 7]>
+      <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css" />
+    <![endif]-->
+    <!-- page specific plugin styles -->
+    <!-- fonts -->
+
+    @* <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,300" />*@
+
+    <!-- ace styles -->
+
+    <link rel="stylesheet" href="@Url.Content("~/assets/css/ace.min.css" )" />
+    <link rel="stylesheet" href="@Url.Content("~/assets/css/ace-rtl.min.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/assets/css/ace-skins.min.css")" />
+
+    <!--[if lte IE 8]>
+      <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
+    <![endif]-->
+    <!-- inline styles related to this page -->
+    <!-- ace settings handler -->
+
+    <script src="@Url.Content("~/assets/js/ace-extra.min.js")"></script>
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="assets/js/html5shiv.js"></script>
+    <script src="assets/js/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<!--<body>  -->
+<body class="login-layout">
+    <div class="space-6"></div>
+    <div class="space-20"></div>
+
+    <div class="space-20"></div>
+    <div class="space-20"></div>
+    <div class="space-20"></div>
+
+    <div class="main-container">
+        <div class="main-content">
+            <div class="row">
+                <div class="col-sm-10 col-sm-offset-1">
+                    <div class="login-container">
+                        <div class="center">
+
+                            <div align="center">
+                                
+                                <a href="http://royalskypost.nl">
+
+                                    <img src="http://royalskypost.nl/images/logo1.png" height="35" />
+                                </a>
+                            </div>
+                            <div align="center">
+                                <h6>&copy; Copyright: Royal Sky Post B.V. 2014</h6>
+                            </div>
+                        </div>
+
+                        <div class="space-20"></div>
+
+
+
+                        <div class="position-relative">
+                            <div id="login-box" class="login-box visible widget-box no-border">
+                                <div class="widget-body">
+                                    <div class="widget-main">
+                                        <h4 class="header blue lighter bigger">
+                                            <i class="icon-coffee green"></i>
+                                            请输入您的信息
+                                        </h4>
+                                        <div class="space-6"></div>
+
+                                        @using (Html.BeginForm("DoLogin", "Login", FormMethod.Post))
+                                        {
+                                            <fieldset>
+                                              
+                                                <label class="block clearfix">
+                                                    <span class="block input-icon input-icon-right">
+                                                      
+                                      <input type="text" class="form-control" name="UserName" required="" placeholder = "请输入用户名">
+                                                        <i class="icon-user"></i>
+                                                    </span>
+                                                </label>
+
+                                                <label class="block clearfix">
+                                                    <span class="block input-icon input-icon-right">
+                                        <input type="Password" class="form-control" name="Password" required="" placeholder = "请输入密码">
+                                                        <i class="icon-lock"></i>
+                                                    </span>
+                                                </label>
+
+                                                <div class="space"></div>
+
+                                                <div class="clearfix">
+                                                  
+
+                                                    <button type="submit" class="width-35 pull-right btn btn-sm btn-primary">
+                                                        <i class="icon-key"></i>
+                                                        登陆
+                                                    </button>
+                                                </div>
+
+                                                <div class="space-4"></div>
+                                            </fieldset>
+
+                                        }
+
+                                    </div><!-- /widget-main -->
+
+                                    <div class="toolbar clearfix">
+                                        <div>
+                                          
+                                        </div>
+
+                                        <div>
+                                          
+                                        </div>
+                                    </div>
+                                </div><!-- /widget-body -->
+                            </div><!-- /login-box -->
+
+                        </div><!-- /position-relative -->
+                    </div>
+  
+
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div>
+
+
+    </div>
+
+
+    <!-- /.main-container -->
+    <!-- basic scripts -->
+    <!--[if !IE]> -->
+
+
+     <script src="~/Content/Common/lib/jquery-1.11.1.min.js"></script>
+    <!-- <![endif]-->
+    <!--[if IE]>
+
+    <![endif]-->
+    <!--[if !IE]> -->
+
+
+</body>
+
+</html>

@@ -1,0 +1,186 @@
+﻿@using MvcDataManage.Models
+@{
+    Layout = null;
+}
+
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="pragma" content="no-cache">
+    <title>Index</title>
+    <script src="~/Content/bootstrap-paginator-master/lib/bootstrap.min.js"></script>
+    <script src="~/Content/bootstrap-paginator-master/lib/jquery-1.9.1.min.js"></script>
+    <script src="~/Content/bootstrap-paginator-master/build/bootstrap-paginator.min.js"></script>
+    <link href="~/Content/bootstrap-paginator-master/css/bootstrap.min.css" rel="stylesheet" />
+    <style type="text/css">
+        .navbar-header img {
+        display:block;
+        margin:0px auto;
+        height:250px;
+        }
+        #line-chart {
+            height: 300px;
+            width: 800px;
+            margin: 0px auto;
+            margin-top: 1em;
+        }
+
+        .navbar-default .navbar-brand, .navbar-default .navbar-brand:hover {
+            color: #00ced1;
+        }
+        .bottom {
+        position:fixed;
+        bottom:50px;
+        width:1540px;
+        height:20px;
+        color:#ffffff;
+        margin:0px auto;
+        text-align:center;
+        }
+    </style>
+
+    <script>
+        $(function () {
+
+            //分页
+            var options = {
+                currentPage: 1,//当前页
+                totalPages: $("#totalpage").val(),//总页数
+                numberofPages: 5,//显示的页数
+
+                itemTexts: function (type, page, current) { //修改显示文字
+                    switch (type) {
+                    case "first":
+                        return "第一页";
+                    case "prev":
+                        return "上一页";
+                    case "next":
+                        return "下一页";
+                    case "last":
+                        return "最后一页";
+                    case "page":
+                        return page;
+                    }
+                }, onPageClicked: function (event, originalEvent, type, page) { //异步换页
+                    //$.post("/Login/QueryPage", { id: page, }, function (data) {
+                    //    // $("#logtable").html(data);
+                    //    tableappend(result); //成功则执行表格刷新函数
+                    //});
+                    //alert(page);
+                    $.ajax({
+                        url: "/Login/QueryPage/" + page,                     
+                        dataType: "json",
+                        success: function (data) {
+                            tableappend(data); //成功则执行表格刷新函数
+                           
+
+
+                        }
+                    });
+
+                },
+
+            };
+            $("#example").bootstrapPaginator(options);
+        });
+
+
+        //动态刷新表格
+        function tableappend(result) {
+            $('#retable tbody').empty();
+
+            var studentlist = eval(result);
+            for (var i = 0; i < studentlist.length; i++) {
+                //创建tr对象
+                var addtbody = document.createElement("tbody");
+                var addtr = document.createElement("tr");
+                //行中创建三个td对象，并把studentlist中的值赋给它
+                var addtd1 = document.createElement("td");
+                addtd1.innerHTML = studentlist[i].CaseName;
+                var addtd2 = document.createElement("td");
+                addtd2.innerHTML = studentlist[i].ResNmae;
+                var addtd3 = document.createElement("td");
+                addtd3.innerHTML = studentlist[i].CaseNum;
+                var addtd4 = document.createElement("td");
+                addtd4.innerHTML = studentlist[i].Num;
+                var addtd5 = document.createElement("td");
+                //alert(studentlist[i].BoolTansfe);
+               
+                addtd5.innerHTML = studentlist[i].Tansfe;
+                //把创建的td对象加入tr中去
+                addtr.appendChild(addtd1);
+                addtr.appendChild(addtd2);
+                addtr.appendChild(addtd3);
+                addtr.appendChild(addtd4);
+                addtr.appendChild(addtd5);
+                addtbody.appendChild(addtr);
+                //把tr加入table中去
+                //document.getElementById("retable").appendChild(addtr);
+                document.getElementById("retable").appendChild(addtbody);
+            }
+        }
+        
+    </script>
+    <style type="text/css">
+        /*body{background:url(Content/bg.png) repeat-x center ;}*/
+        /*body{
+            background:-moz-linear-gradient(top,RGB(22,94,146),RGB(25,97,114);
+            background:-webkit-gradient(linear, 0% 0%, 0% 100%,from(RGB(22,94,146), to(RGB(25,97,114)));
+        }*/
+    </style>
+</head>
+<body style="background-color:RGB(22,94,146) !important">
+    <div class="navbar navbar-default" role="navigation">
+        <div class="navbar-header" style="">
+          @*  <img src="~/Content/logo1.gif" height="96" style="margin-left: 70px" />*@
+            <img src="~/Content/logo.png"   />
+        </div>
+
+        <div class="navbar-collapse collapse" style="height: 1px; ">
+        </div>
+    </div>
+
+    <div class="panel panel-primary" style="margin: 0 10%">
+
+        <div class="panel-body">
+            <table id="retable" class="table table-bordered table-hover " style="background: #fff">
+                <caption></caption>
+                <thead>
+                    <tr>
+                        <th>案件名称</th>
+                        <th>物证名称</th>
+                        <th>物证编号</th>
+                        <th>物证柜编号</th>
+                        <th>移交状态</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (QueryModel a in @ViewBag.QueryModellist)
+                    {
+                        <tr>
+                            <td>@a.CaseName.Trim()</td>
+                            <td>@a.ResNmae.Trim()</td>
+                            <td>@a.CaseNum.Trim()</td>
+                            <td>@a.Num.Trim()</td>
+                            <td>
+                               @a.Tansfe.Trim()
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <div id="example"></div>
+            <input  id="totalpage" type="hidden" value="@ViewBag.TotalPage" />
+        </div>
+        <div class="bottom">
+            <p>技术支持：咸宁在线网络有限公司</p>
+        </div>
+    </div>
+
+</body>
+</html>

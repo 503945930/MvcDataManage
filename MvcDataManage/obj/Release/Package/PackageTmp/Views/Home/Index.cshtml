@@ -1,0 +1,245 @@
+﻿@using DefaultConnection
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script type="text/javascript">
+    $(function () {
+        $.ajax({
+            url: "/Home/IsNotNull",
+            dataType: "json",
+            async: false,
+            success: function (data) {
+                //alert("1234");
+                if (data.length != 0) {
+
+                    $.each(data, function (index, content) {
+                        //alert(content['ResNmae']);
+
+                        $("#" + content["CabinetIId"]).css("background", "#7fffd4");
+                        // alert(content["CabinetIId"]);
+                    });
+
+                }
+                // html.appendTo('#evidence');
+
+
+            }
+        });
+
+
+
+        //给柜子绑定点击事件
+        //alert("123");
+        $('.center dl dd a').click(function () {
+            // var num = event.srcElement.innerText;
+            var num = $(this).context.dataset.place;
+            console.log(num);
+            $.ajax({
+                url: "/Home/OpenCab?cabinet=" + num,
+                dataType: "json",
+                async: false,
+                success: function (data) {
+                    //alert("1234");
+                    if (data.length != 0) {
+                        $('#evidence').empty();
+                        var html = '';
+                        $.each(data, function (index, content) {
+                            //alert(content['ResNmae']);
+                            html += " <a href='/Home/Data/" + content['ResID'] + "'>" + content['ResNmae'] + "</a>";
+                           
+                            //html += " <a href='/Data/Add?Resid=" + num + "'>" + "录入数据" + "</a>";
+                            //$('#evidence').html(html);
+                            //alert(content["ResNmae"]);                      
+                        });
+                        html += " <a href='/Data/Add?Resid=" + num + "' style='margin-left:350px'>" + "录入数据" + "</a>";
+                        $('#evidence').html(html);
+                    } else {
+                        var html = '';
+                        html += " <a href='/Data/Add?Resid=" + num + "'>" + "录入数据" + "</a>";
+                        $('#evidence').html(html);
+                    }
+                    // html.appendTo('#evidence');
+
+
+                }
+            });
+        });
+
+
+    })
+</script>
+<style type="text/css">
+    *
+    {
+        margin: 0;
+        padding: 0;
+    }
+    /*.center{  margin:20px auto; overflow:hidden;width: 964px;border-right: 0;}*/
+    .center
+    {
+        margin: 20px auto;
+        overflow: hidden;
+        border-right: 0;
+    }
+        /*.center dl{ width:120px; height:150px; text-align:center; float:left; border:1px solid #c0c0c0;margin-bottom: 0}*/
+        .center dl
+        {
+            width: 23%;
+            height: 250px;
+            text-align: center;
+            float: left;
+            border: 1px solid #c0c0c0;
+            margin-bottom: 0;
+        }
+
+            .center dl dt
+            {
+                font-size: 15px;
+                color: #000000;
+                font-family: "宋体","Arial Narrow";
+                padding-top: 10px;
+            }
+
+            .center dl dd
+            {
+                height: 25%;
+                text-align: center;
+            }
+
+    #myModal .modal-body
+    {
+        max-height: 800px;
+    }
+
+    #myModal
+    {
+        margin: 150px 0 0 0;
+    }
+    /* PLAY THE WITH THE VALUES TO SEE GET THE DESIRED EFFECT */
+</style>
+<h2>>>资料柜</h2>
+<div class="stats">
+    <p class="stat"><span class="label label-info">@ViewBag.ReCont</span> 物证</p>
+    <p class="stat"><span class="label label-success">@ViewBag.ReWeiCont</span> 未移交</p>
+    <p class="stat"><span class="label label-danger">@ViewBag.ReYiCont</span> 已移交</p>
+</div>
+<div class="input-append">
+    @*<input type="text" class="span2 search-query">*@
+    <button type="submit" class="btn btn-default" onclick="location='/Home/DataSearch'">搜索</button>
+</div>
+
+
+<div class="center">
+    <dl class="center_dl_04">
+        <dt>物证柜 4</dt>
+        <dd id="4"><a href="#" data-toggle="modal" data-place="4" data-target="#myModal">查看</a></dd>
+    </dl>
+    <dl class="center_dl_04">
+        <dt>物证柜 3</dt>
+        <dd id="3"><a href="#" data-toggle="modal" data-place="3" data-target="#myModal">查看</a></dd>
+    </dl>
+    <dl class="center_dl_04">
+        <dt>物证柜 2</dt>
+        <dd id="2"><a href="#" data-toggle="modal" data-place="2" data-target="#myModal">查看</a></dd>
+    </dl>
+    <dl class="center_dl_04">
+        <dt>物证柜 1</dt>
+        <dd id="1"><a href="#" data-toggle="modal" data-place="1" data-target="#myModal">查看</a></dd>
+       
+    </dl>
+
+</div>
+<div class="center">
+    <dl class="center_dl_04">
+        <dt>物证柜 8</dt>
+        <dd id="8"><a href="#" data-toggle="modal" data-place="8" data-target="#myModal">查看</a></dd>
+    </dl>
+    <dl class="center_dl_04">
+        <dt>物证柜 7</dt>
+        <dd id="7"><a href="#" data-toggle="modal" data-place="7" data-target="#myModal">查看</a></dd>
+    </dl>
+    <dl class="center_dl_04">
+        <dt>物证柜 6</dt>
+        <dd id="6"><a href="#" data-toggle="modal" data-place="6" data-target="#myModal">查看</a></dd>
+    </dl>
+    <dl class="center_dl_04">
+        <dt>物证柜 5</dt>
+        <dd id="5"><a href="#" data-toggle="modal" data-place="5" data-target="#myModal">查看</a></dd>
+
+    </dl>
+
+</div>
+<div class="center">
+    <dl class="center_dl_04">
+        <dt>物证柜 12</dt>
+        <dd id="12"><a href="#" data-toggle="modal" data-place="12" data-target="#myModal">查看</a></dd>
+    </dl>
+    <dl class="center_dl_04">
+        <dt>物证柜 11</dt>
+        <dd id="11"><a href="#" data-toggle="modal" data-place="11" data-target="#myModal">查看</a></dd>
+    </dl>
+    <dl class="center_dl_04">
+        <dt>物证柜 10</dt>
+        <dd id="10"><a href="#" data-toggle="modal" data-place="10" data-target="#myModal">查看</a></dd>
+    </dl>
+    <dl class="center_dl_04">
+        <dt>物证柜 9</dt>
+        <dd id="9"><a href="#" data-toggle="modal" data-place="9" data-target="#myModal">查看</a></dd>
+
+    </dl>
+
+</div>
+<div class="center">
+    <dl class="center_dl_04">
+        <dt>物证柜 16</dt>
+        <dd id="16"><a href="#" data-toggle="modal" data-place="16" data-target="#myModal">查看</a></dd>
+    </dl>
+    <dl class="center_dl_04">
+        <dt>物证柜 15</dt>
+        <dd id="15"><a href="#" data-toggle="modal" data-place="15" data-target="#myModal">查看</a></dd>
+    </dl>
+    <dl class="center_dl_04">
+        <dt>物证柜 14</dt>
+        <dd id="14"><a href="#" data-toggle="modal" data-place="14" data-target="#myModal">查看</a></dd>
+    </dl>
+    <dl class="center_dl_04">
+        <dt>物证柜 13</dt>
+        <dd id="13"><a href="#" data-toggle="modal" data-place="13" data-target="#myModal">查看</a></dd>
+
+    </dl>
+
+</div>
+
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+    aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close"
+                    data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">物品列表
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div id="evidence"></div>
+                @* <a id="evidence" href="Data" >AK-47</a>*@
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"
+                    data-dismiss="modal">
+                    关闭
+                </button>
+                @*  <button type="button" class="btn btn-primary">
+               提交更改
+            </button>*@
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal -->
+</div>

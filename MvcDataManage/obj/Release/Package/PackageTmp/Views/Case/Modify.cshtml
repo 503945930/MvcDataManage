@@ -1,0 +1,103 @@
+﻿@model MvcDataManage.Models.CaseJoinCabinet
+@{
+    ViewBag.Title = "Modify";
+}
+<script type="text/javascript">
+    $(function() {
+        $("#CaseReasonIdfirst").change(function() {
+            $.ajax({
+                url: "/Data/Selete/" + $("#CaseReasonIdfirst option:selected").val().substring(0, 5),
+                type: "get",
+                async:false,
+                success: function (data) {
+
+                    document.getElementById("CaseReasonId").options.length = 0;
+                //        $("#CaseReasonId option").length = 0;
+                    $.each(data, function (index, value) {
+                        
+                        var varItem = new Option(value.CaseReasonName, value.CaseReasonId);
+                        //console.log(varItem);
+                        document.getElementById("CaseReasonId").options.add(varItem);
+
+                                           //objSelect.options[objSelect.options.length] = varItem;  
+                        //    //    //    $("#CaseReasonId").options.add
+                        //    //    //});
+                        //    //    //console.log($("#CaseReasonId option").length);
+                        //    //    //for (var i = $("#CaseReasonId option").length - 1; i >= 0; i--) {
+                        //    //    //    $(this).remove(i);
+                        //    //    //}
+                        //    //    console.log($("#CaseReasonId").length);
+
+                    });
+                }
+            });
+        });
+
+        //绑定修改 的值
+        $("#CaseReasonIdfirst option[value= @ViewData["CaseReasonId_Paent"]]").attr("selected", true);
+        $("#CaseReasonId option[value= @ViewData["CaseReasonId"]]").attr("selected", true);
+    })
+</script>
+<h2>>>修改案件信息</h2>
+<form class="form-horizontal" role="form" action="/Case/DoModify" method="POST" >
+    <div class="form-group hidden ">
+      <label  class="col-sm-2 control-label">案件ID</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control"  name="CaseId" value="@Model.CaseId"
+            >
+      </div>
+   </div>
+    <div class="form-group hidden ">
+        <label  class="col-sm-2 control-label">物品ID</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control"  name="ResID" value="@Model.ResID"
+                >
+        </div>
+    </div>
+    <div class="form-group">
+        <label  class="col-sm-2 control-label">案件名称</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control"  name="CaseName" value="@Model.CaseName.Trim()"
+                   placeholder="请输入案件名称">
+        </div>
+    </div>
+    <div class="form-group">
+        <label  class="col-sm-2 control-label">案由</label>
+        <div class="col-sm-10">
+             @Html.DropDownList("CaseReasonIdfirst",ViewBag.CaseReason as IEnumerable<SelectListItem>,new {@class="form-control-5",@seleted=1  })
+            @Html.DropDownList("CaseReasonId",ViewBag.CaseReasonn as IEnumerable<SelectListItem>,new {@class="form-control-5"  })
+            @* <input type="text" class="form-control"  name="CaseReason" value="@Model.CaseReason.Trim()"
+                   placeholder="请输入案由">*@
+        </div>
+    </div>
+    <div class="form-group">
+        <label  class="col-sm-2 control-label">物证编号</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control"  name="CaseNum" value="@Model.CaseNum.Trim()"  
+                   placeholder="请输入物证编号">
+         
+        </div>
+    </div>
+    <div class="form-group">
+        <label  class="col-sm-2 control-label">物证柜编号</label>
+        <div class="col-sm-10">
+            @* <input type="text" class="form-control"  name="CaseNum" value="@Model.CaseNum.Trim()"
+                   placeholder="请输入物证编号">*@
+            @Html.DropDownListFor(a=>a.CabinetIId,ViewBag.CabinetList as IEnumerable<SelectListItem>,new {@class="form-control"  })
+        </div>
+    </div>
+    <div class="form-group">
+        <label  class="col-sm-2 control-label">案件简介</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control"  name="CaseSum" value="@Model.CaseSum.Trim()"
+                   placeholder="请输入案件简介">
+          
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-default">提交</button>
+            <button type="button" class="btn btn-default" >返回</button>
+        </div>
+    </div>
+</form>

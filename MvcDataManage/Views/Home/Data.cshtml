@@ -1,0 +1,300 @@
+﻿@using DefaultConnection
+@using MvcDataManage.Models
+
+@{
+    ViewBag.Title = "Data";
+}
+<script src="~/Content/Datepicke/bootstrap-datepicker.js"></script>
+<link href="~/Content/Datepicke/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+<link href="~/Content/Datepicke/datepicker.css" rel="stylesheet" />
+<script type="text/javascript">
+    $(function () {
+
+        $('#datepicker').datepicker();
+        $('#datepicker1').datepicker();
+    })
+</script>
+<style type="text/css">
+    #myModal .modal-body {
+        max-height: 800px;
+    }
+
+    #myModal {
+        margin: 150px 0 0 0;
+    }
+    /* PLAY THE WITH THE VALUES TO SEE GET THE DESIRED EFFECT */
+</style>
+<h2>>>详细资料</h2>
+
+<script type="text/javascript">
+    function Del() {
+        alert("删除成功");
+    }
+    function Modify() {
+        alert("删除成功");
+    }
+</script>
+@*<h2>Data</h2>*@
+
+@*案件信息*@
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">案件信息</h3>
+    </div>
+    <div class="panel-body">
+        <table class="table table-bordered table-hover table-striped ">
+            <thead>
+                <tr>
+                    <th style="width: 40%">案件名称</th>
+                    <th style="width: 40%">案由</th>
+                    <th>物证编号</th>
+                    <th>物证柜编号</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (CaseJoinCabinet a in @ViewBag.CaseList)
+                {
+                    <tr>
+                        <td class="bigger-110">@a.CaseName.Trim()</td>
+                        <td class="bigger-110">@a.CaseReasonName.Trim()</td>
+                        <td>@a.CaseNum.Trim()</td>
+                        <td>@a.Num.Trim()</td>
+                        <td><a href="/Case/Modify/@a.CaseId"  >修改</a>
+                            @*<a href="#" onclick="Del();">删除</a>*@
+                        </td>
+                    </tr>
+                }
+
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+@*犯罪嫌疑人信息*@
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">犯罪嫌疑人信息</h3>
+    </div>
+    <div class="panel-body">
+        <table class="table table-bordered table-hover table-striped ">
+            @*<caption>犯罪嫌疑人信息</caption>*@
+            <thead>
+                <tr>
+                    <th>姓名</th>
+                    <th>性别</th>
+                    
+                    <th>地址</th>
+                    <th>身份证号码</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (ww_Suspect a in @ViewBag.SuspectList)
+                {
+                    <tr>
+                        <td>@a.SuspectName.Trim()</td>
+                        <td>@a.SuspectSex.Trim()</td>
+                       
+                        <td>@a.SuspectAdress.Trim()</td>
+                        <td>@a.SuspectIdCard.Trim()</td>
+                        <td><a href="/Case/ModifySuspect/@a.SuspectId"  >修改</a>
+                            @*<a href="#" onclick="Del();">删除</a>*@
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+
+
+@*涉案物证*@
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">涉案物证</h3>
+    </div>
+    <div class="panel-body">
+        <h2>物证名称： @{
+            var List = (List<ww_Re>)@ViewBag.ResList;                  
+        }@List[0].ResNmae.Trim() </h2>
+        <h2>照片：
+            <button type="button"  class="btn btn-warning" onclick="location='/Case/Upload/ @List[0].ResID'" >添加照片</button></h2>
+        @*<img src="~/Picture/yjh.gif" class="img-thumbnail" /><br/><img src="~/Picture/yjh.gif"  class="img-thumbnail" /><br/><img src="~/Picture/yjh.gif" class="img-thumbnail" /><br/>*@
+        @* <img src="~/Content/Images/1.png" class="img-thumbnail" />
+       <img src="~/Content/Images/3.bmp" class="img-thumbnail" />*@
+        <div style="width: 80%;float:left">
+            @foreach (ww_Photo a in @ViewBag.PhotoList)
+            {
+                <img src="@a.PhotoURL.Trim()" class="img-thumbnail" /><button class=".btn-lg btn btn-warning" onclick="location='/Case/DelPhoto/@a.PhotoId'" >删除</button><br />
+            }
+           
+        </div>
+        <div style="float:left">
+            <h2>二维码：</h2>
+            <img src="/Home/GetImg/@List[0].ResID" width="200" height="200" alt="" />  
+        </div>
+        <div style="clear: both"></div>
+        <h2>简要物品信息：</h2>
+        <p class="lead">@List[0].ResMess.Trim()</p>
+        <button type="button" class="btn btn-warning" onclick="location='/Case/ModifiRes/@List[0].ResID'" >修改</button>
+    </div>
+</div>
+
+@*案件简介*@
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">案件简介</h3>
+    </div>
+    <div class="panel-body">
+        <p class="lead">
+            @{
+                var List1 = (List<CaseJoinCabinet>)@ViewBag.CaseList;                  
+            }@List1[0].CaseSum.Trim()
+        </p>
+        <button type="button" onclick="alert('请在上面案件信息中修改')" class="btn btn-warning">修改</button>
+    </div>
+</div>
+
+@*移交状态*@
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">移交状态</h3>
+    </div>
+    <div class="panel-body">
+        <label class="checkbox-inline">
+            <input type="radio" name="optionsRadiosinline" id="optionsRadios3"
+                   value="option1" checked>
+            
+
+
+            @((List[0].BoolTansfe==true)?"已移交":"未移交")
+        </label>
+        @*<label class="checkbox-inline">
+      <input type="radio" name="optionsRadiosinline" id="optionsRadios4" 
+         value="option2"> 已移交
+   </label>*@
+        
+         @{
+             var TransfeList = (List<ww_Transfe>)@ViewBag.TransfeList;                  
+        }
+        <form class="form-horizontal" role="form" action="/Case/Transfe" method="POST" >
+            <div class="form-group">
+                <label class="col-sm-1 control-label hidden" >案件ID</label>
+                <div class="col-sm-2" hidden>
+                    <input type="text" class="form-control" name="ResID" value="@List[0].ResID"
+                        placeholder="请输入移交单位">
+                </div> 
+                <label class="col-sm-1 control-label" >移交单位</label>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" name="TransfeUnit"  value="@TransfeList[0].TransfeUnit"
+                           placeholder="请输入移交单位">
+                </div>
+                <label class="col-sm-1 control-label">部门</label>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" name="TransfeDepartment" value="@TransfeList[0].TransfeDepartment"
+                           placeholder="请输入部门">
+                </div>
+
+                <label class="col-sm-1 control-label">时间</label>
+                <div class="col-sm-2">
+
+                    <input type="text" class="form-control"  name="TransfeTime" value="@TransfeList[0].TransfeTime" readonly  id="datepicker" data-date-format="yyyy/mm/dd"
+                           placeholder="请选择时间">
+                </div>
+                <label class="col-sm-1 control-label">经手人</label>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" name="TransfePeople" value="@TransfeList[0].TransfePeople"
+                           placeholder="请输入经手人">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-1 control-label">接收单位</label>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" name="ReciveUnit" value="@TransfeList[0].ReciveUnit"
+                           placeholder="请输入名字">
+                </div>
+                <label class="col-sm-1 control-label">部门</label>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" name="ReciveDepartment" value="@TransfeList[0].ReciveDepartment"
+                           placeholder="请输入名字">
+                </div>
+
+                <label class="col-sm-1 control-label">时间</label>
+                <div class="col-sm-2">
+
+                    <input type="text" class="form-control"  name="ReciveTime" value="@TransfeList[0].ReciveTime"  readonly  id="datepicker1" data-date-format="yyyy/mm/dd"
+                           placeholder="请选择时间">
+                </div>
+
+                <label class="col-sm-1 control-label">经手人</label>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" name="RecivePeople" value="@TransfeList[0].RecivePeople"
+                           placeholder="请输入名字">
+                </div>
+            </div>
+            @if (List[0].BoolTansfe == false)
+            {
+                <div class="form-group">
+                <div class="col-sm-offset-5 col-sm-5">
+                    <button type="submit" class="btn btn-default">提交</button>
+                    <button type="button" class="btn btn-default" onclick="location='/Home/Index'">返回</button>
+                </div>
+            </div>
+            }
+    
+          @*  <div class="form-group">
+                <div class="col-sm-offset-5 col-sm-5">
+                    <button type="submit" class="btn btn-default">提交</button>
+                    <button type="button" class="btn btn-default" onclick="location='/Home/Index'">返回</button>
+                </div>
+            </div>*@
+        </form>
+
+    </div>
+</div>
+
+@*修改模态框*@
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+    aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close"
+                    data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">修改
+                </h4>
+            </div>
+            <div class="modal-body">
+                <iframe src="/Case/Index"></iframe>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"
+                    data-dismiss="modal">
+                    关闭
+                </button>
+                @*  <button type="button" class="btn btn-primary">
+               提交更改
+            </button>*@
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal -->
+</div>
+
+
+
+
+
+

@@ -1,0 +1,43 @@
+﻿@using DefaultConnection
+@{
+    ViewBag.Title = "Index";
+}
+<script type="text/javascript">
+    $(function() {
+        
+    })
+</script>
+<h2>>>用户管理</h2>
+<table class="table table-bordered">
+   <caption>用户管理</caption>
+   <thead>
+       <tr>         
+           <th>用户名</th>
+           <th>密码</th>
+           <th>部门</th>
+           <th>身份证</th>
+           <th>电话</th>
+           <th>Email</th>
+           <th>操作</th>
+       </tr>
+   </thead>
+   <tbody>
+      @foreach (ww_User a in @ViewBag.UserList)
+                {
+                    <tr>
+                        <td>@a.UserName.Trim()</td>
+                        <td>@a.Password.Trim()</td>
+                        <td>@a.Department.Trim()</td>
+                        <td>@a.IDCard.Trim()</td>
+                        <td>@a.Phone.Trim()</td>
+                          <td>@a.Email.Trim()</td>
+                        <td><a href="/Users/ModifyPass/@a.UserId"  >修改</a>
+                            
+                             <a href="/Users/DelUser/@a.UserId">删除</a>
+                           
+                        </td>
+                    </tr>
+                }
+    
+   </tbody>
+</table>  
